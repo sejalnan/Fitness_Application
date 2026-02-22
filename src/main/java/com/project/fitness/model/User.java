@@ -1,6 +1,7 @@
 package com.project.fitness.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.fitness.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

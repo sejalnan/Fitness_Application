@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthContoller {
 
     private final UserService userService;
-    private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
     private  final JwtUtils jwtUtils;
 
     @PostMapping("/register")
@@ -33,17 +31,13 @@ public class AuthContoller {
         return ResponseEntity.ok(userService.register(registerRequest)) ;
 
     }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        Authentication authentication;
-        try{
-            User user=userRepo.findByEmail(loginRequest.getEmail());
-            if(user == null) return ResponseEntity.status(401).build();
 
-            if(!passwordEncoder.matches(loginRequest.getPassword(),user.getPassword())){
-                return ResponseEntity.status(401).build();
-            }
+        try{
+            User user=userService.authenticate(loginRequest);
 
             String token =jwtUtils.generateToken(user.getId(),user.getRole().name());
             return  ResponseEntity.ok(new LoginResponse(

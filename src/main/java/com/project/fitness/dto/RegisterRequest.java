@@ -1,6 +1,6 @@
 package com.project.fitness.dto;
 
-import com.project.fitness.model.UserRole;
+import com.project.fitness.enums.UserRole;
 import lombok.Data;
 
 @Data
